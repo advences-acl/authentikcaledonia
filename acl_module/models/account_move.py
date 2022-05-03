@@ -21,7 +21,6 @@ import logging
 class AccountInvoiceInherit(models.Model):
     _inherit = 'account.move'
     
-    amount_tax_signed = fields.Monetary(string='TGC', store=True, readonly=True, compute='_compute_amount', currency_field='company_currency_id')    
     def _recompute_tax_lines(self, recompute_tax_base_amount=False):
         ''' Compute the dynamic tax lines of the journal entry.
 
