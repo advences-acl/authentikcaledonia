@@ -41,7 +41,7 @@ class PurchaseOrder(models.Model):
                 'subject': subject,
                 'body_html': body_html,
                 'email_from': 'authentikcaledonia@gmail.com',
-                'email_to': 'louis@advences.com' #self.email
+                'email_to': self.partner_id.email
             }
             template_obj = self.env['mail.mail']
             template_id = template_obj.create(template_data)
