@@ -7,7 +7,7 @@ _logger = logging.getLogger(__name__)
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    first_service_date = fields.Date('Date du premier service')
+    #first_service_date = fields.Date('Date du premier service')
     @api.onchange('partner_ref')
     def send_mail(self):
         if self.state == 'purchase':
