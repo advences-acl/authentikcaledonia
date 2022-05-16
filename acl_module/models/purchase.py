@@ -16,7 +16,7 @@ class PurchaseOrder(models.Model):
                 subject = subject + ' - ' + self.x_customer
             if self.x_first_service_date != None:
                 subject = subject + ' - ' + self.x_first_service_date
-            if self.x_first_service_date != None:
+            if self.name != None:
                 subject = subject + ' - ' + str(self.name)
 
             body_html = """<p>Cher partenaire,</p></br>
