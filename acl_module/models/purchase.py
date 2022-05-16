@@ -49,6 +49,7 @@ class PurchaseOrder(models.Model):
 
     def button_confirm(self):
         for order in self:
+            order.send_mail_confirmation_purchase()
             if order.state not in ['draft', 'sent']:
                 continue
             order._add_supplier_to_product()
@@ -59,6 +60,5 @@ class PurchaseOrder(models.Model):
                 order.write({'state': 'to approve'})
             if order.partner_id not in order.message_partner_ids:
                 order.message_subscribe([order.partner_id.id])
-            order.send_mail_confirmation_purchase()
         return True
 
