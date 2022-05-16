@@ -19,6 +19,11 @@ class PurchaseOrder(models.Model):
             if self.name != None:
                 subject = subject + ' - ' + str(self.name)
 
+            lines = self.env['purchase.order.line'].sudo().search([('order_id', '=', self.id)], limit=1)
+            content = ""
+            for line in lines:
+                content = content + '<tr><td>' + line.name + '</td><td>' + line.price_total +'</td></tr>'
+
             body_html = """<p>Cher partenaire,</p></br>
                 <p>Merci de confirmer la commande suivante :</p></br>
                 <table class="table table-sm o_main_table" style="width:70%">
@@ -28,12 +33,7 @@ class PurchaseOrder(models.Model):
                             <th name="th_quantity" class="text-right">Prix</th>
                         </tr>
                     </thead>
-                    <tbody class="sale_tbody">
-                        <tr t-att-class="bg-200 font-weight-bold o_line_section">
-                            <td name="td_name" style="width:80%">__line_name__<br/>__line_description__</td>
-                            <td name="td_quantity" class="text-right">__line_total__</td>
-                        </tr>
-                    </tbody>
+                    <tbody class="sale_tbody">""" +  content + """</tbody>
                 </table>
                 <p>Cordialement,</p>
                 <p>Equipe Authentik Caledonia</p>"""
