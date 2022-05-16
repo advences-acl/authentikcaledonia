@@ -8,8 +8,8 @@ class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
     #first_service_date = fields.Date('Date du premier service')
-    @api.onchange('partner_ref')
-    def send_mail(self):
+    #@api.onchange('partner_ref')
+    def send_mail_confirmation_purchase(self):
         if self.state == 'purchase':
             subject = 'Demande de confirmation'
             if self.x_customer != None:
