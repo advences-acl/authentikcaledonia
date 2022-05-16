@@ -19,10 +19,10 @@ class PurchaseOrder(models.Model):
             if self.name != None:
                 subject = subject + ' - ' + str(self.name)
 
-            lines = self.env['purchase.order.line'].search([('order_id', '=', self.id)])
+            lines = self.env['purchase.order.line'].sudo().search([("order_id", "=", self._origin.id)])
             content = ""
             for line in lines:
-                content = content + '<tr><td>' + line.name + '</td><td>' + line.price_total +'</td></tr>'
+                content = content + """<tr t-att-class="bg-200 font-weight-bold o_line_section"><td name="td_name" style="width:80%">""" + line.product_id.name + """<br>"""+ line.name + """</td><td name="td_quantity" class="text-right">""" + line.price_subtotal +"""</td></tr>"""
 
             body_html = """<p>Cher partenaire,</p></br>
                 <p>Merci de confirmer la commande suivante :</p></br>
