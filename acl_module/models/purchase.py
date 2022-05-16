@@ -13,9 +13,9 @@ class PurchaseOrder(models.Model):
         if self.state == 'purchase':
             subject = 'Demande de confirmation'
             if self.x_customer != None:
-                subject = subject + ' - ' + self.x_customer
+                subject = subject + ' - ' + str(self.x_customer)
             if self.x_first_service_date != None:
-                subject = subject + ' - ' + self.x_first_service_date
+                subject = subject + ' - ' + str(self.x_first_service_date)
             if self.name != None:
                 subject = subject + ' - ' + str(self.name)
 
