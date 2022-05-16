@@ -22,7 +22,7 @@ class PurchaseOrder(models.Model):
             lines = self.env['purchase.order.line'].sudo().search([("order_id", "=", self._origin.id)])
             content = ""
             for line in lines:
-                content = content + """<tr t-att-class="bg-200 font-weight-bold o_line_section"><td name="td_name" style="width:80%">""" + line.product_id.name + """<br>"""+ line.name + """</td><td name="td_quantity" class="text-right">""" + str(line.price_subtotal) +"""</td></tr>"""
+                content = content + """<tr t-att-class="bg-200 font-weight-bold o_line_section"><td name="td_name" style="width:80%">""" + line.name + """</td><td name="td_quantity" class="text-right">""" + str(line.price_subtotal) + """ """ + line.currency_id.symbol + """</td></tr>"""
 
             body_html = """<p>Cher partenaire,</p></br>
                 <p>Merci de confirmer la commande suivante :</p></br>
