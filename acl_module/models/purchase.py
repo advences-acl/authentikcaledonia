@@ -8,7 +8,6 @@ class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
     #first_service_date = fields.Date('Date du premier service')
-    #@api.onchange('partner_ref')
     def send_mail_confirmation_purchase(self):
         if self.state == 'purchase':
             subject = 'Demande de confirmation'
@@ -48,4 +47,18 @@ class PurchaseOrder(models.Model):
             template_id = template_obj.create(template_data)
             template_obj.send(template_id)
 
+    def button_confirm(self):
+        for order in self:
+            if order.state not in ['draft', 'sent']:
+                continue
+            order._add_supplier_to_product()
+            # Deal with double validation process
+            if order._approval_allowed():
+                order.button_approve()
+            else:
+                order.write({'state': 'to approve'})
+            if order.partner_id not in order.message_partner_ids:
+                order.message_subscribe([order.partner_id.id])
+            order.send_mail_confirmation_purchase()
+        return True
 
