@@ -19,7 +19,7 @@ class PurchaseOrder(models.Model):
             if self.name != None:
                 subject = subject + ' - ' + str(self.name)
 
-            lines = self.env['purchase.order.line'].sudo().search([('order_id', '=', self.id)], limit=1)
+            lines = self.env['purchase.order.line'].search([('order_id', '=', self.id)])
             content = ""
             for line in lines:
                 content = content + '<tr><td>' + line.name + '</td><td>' + line.price_total +'</td></tr>'
