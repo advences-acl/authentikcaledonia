@@ -7,7 +7,6 @@ _logger = logging.getLogger(__name__)
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    #first_service_date = fields.Date('Date du premier service')
     def send_mail_confirmation_purchase(self):
         if self.state == 'purchase':
             subject = 'Demande de confirmation'
@@ -47,7 +46,7 @@ class PurchaseOrder(models.Model):
             template_id = template_obj.create(template_data)
             template_obj.send(template_id)
 
-    def button_confirm(self):
+    """def button_confirm(self):
         for order in self:
             order.send_mail_confirmation_purchase()
             if order.state not in ['draft', 'sent']:
@@ -60,5 +59,5 @@ class PurchaseOrder(models.Model):
                 order.write({'state': 'to approve'})
             if order.partner_id not in order.message_partner_ids:
                 order.message_subscribe([order.partner_id.id])
-        return True
+        return True"""
 
