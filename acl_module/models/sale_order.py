@@ -36,7 +36,8 @@ class SaleOrder(models.Model):
         new_lines = self.env['sale.order.line']
 
         package = 0
-        for line in self.order_line:
+        for order in self:
+            line = order.order_line
             if line.product_id == 4:
                 package = package + 1
 
