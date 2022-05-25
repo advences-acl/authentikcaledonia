@@ -38,7 +38,7 @@ class SaleOrder(models.Model):
         package = 0
         for line in self.order_line:
             if line.product_id == 4:
-                package = package = 1
+                package = package + 1
 
         if package > 0:
             # if we need to add one or multiple sale order lines in the DB
