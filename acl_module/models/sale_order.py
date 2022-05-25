@@ -35,27 +35,31 @@ class SaleOrder(models.Model):
         # store here new lines that we might create below (we use an empty 'sale.order.line' recordset as default value in order to easily add records to it as we need ...)
         new_lines = self.env['sale.order.line']
 
-        # if we need to add one or multiple sale order lines in the DB
-        new_line = self.order_line.create({
-            'order_id': self._origin.id,
-            'product_id': 4,  # some product.product ID,
-        })
+        package = 0
+        for line in self.order_line:
+            if line.product_id == 4:
+                package = package = 1
 
-        # trigger some methods to update all the rest of the values
-        new_line.product_id_change()
-
-        # add new line to the new_lines recordset
-        new_lines |= new_line
+        if package > 0:
+            # if we need to add one or multiple sale order lines in the DB
+            new_line = self.order_line.create({
+                'order_id': self._origin.id,
+                'product_id': 4,  # some product.product ID,
+            })
+            # trigger some methods to update all the rest of the values
+            new_line.product_id_change()
+            # add new line to the new_lines recordset
+            new_lines |= new_line
 
         # some other processing, even adding couple of more lines like above ...
 
         # at the end, in case we need to send back the newly created lines ...
-        #if new_lines:
+        if new_lines:
             # combine existing order_line with the new lines
-            #all_lines = self.order_line + new_lines
+            all_lines = self.order_line + new_lines
 
         return {
             'value': {
-                'order_line': new_lines
+                'order_line': all_lines
             }
         }
