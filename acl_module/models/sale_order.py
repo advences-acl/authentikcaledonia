@@ -35,10 +35,11 @@ class SaleOrder(models.Model):
         # store here new lines that we might create below (we use an empty 'sale.order.line' recordset as default value in order to easily add records to it as we need ...)
         new_lines = self.env['sale.order.line']
 
+        line_bases = self.env['sale.order.line'].sudo().search([("order_id", "=", self._origin.id)])
+
         package = 0
-        for order in self:
-            line = order.order_line
-            if line.product_id == 4:
+        for line_base in line_bases:
+            if line_base.product_id == 4:
                 package = package + 1
 
         if package == 0:
