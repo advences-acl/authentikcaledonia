@@ -54,9 +54,10 @@ class SaleOrder(models.Model):
         # some other processing, even adding couple of more lines like above ...
 
         # at the end, in case we need to send back the newly created lines ...
+        all_lines = self.order_line
         if new_lines:
             # combine existing order_line with the new lines
-            all_lines = self.order_line + new_lines
+            all_lines = all_lines + new_lines
 
         return {
             'value': {
