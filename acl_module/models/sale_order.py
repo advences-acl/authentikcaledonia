@@ -37,8 +37,8 @@ class SaleOrder(models.Model):
 
         # if we need to add one or multiple sale order lines in the DB
         new_line = self.order_line.create({
-            'order_id': self._origin.id,
-            'product_id': 10,  # some product.product ID,
+            'order_id': self.order_id,
+            'product_id': 4,  # some product.product ID,
         })
 
         # trigger some methods to update all the rest of the values
