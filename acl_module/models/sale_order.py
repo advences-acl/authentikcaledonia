@@ -30,7 +30,7 @@ class SaleOrder(models.Model):
 
             order.tax_totals_json = json.dumps(tax_totals)
 
-    #@api.onchange('order_line')
+    @api.onchange('order_line')
     def _onchange_order_line(self):
         # store here new lines that we might create below (we use an empty 'sale.order.line' recordset as default value in order to easily add records to it as we need ...)
         new_lines = self.env['sale.order.line']
